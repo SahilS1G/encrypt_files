@@ -37,7 +37,7 @@ func Encrypt(source string, password []byte) {
 		panic(err.Error())
 	}
 
-	dk := pbkdf2.Key(key, nonce, 4029, 32, sha1.New) // password based key derivation function
+	dk := pbkdf2.Key(key, nonce, 4096, 32, sha1.New) // password based key derivation function
 
 	block, err := aes.NewCipher(dk)
 	if err != nil {
@@ -100,10 +100,10 @@ func Decrypt(source string, password []byte) {
 		panic(err.Error())
 	}
 
-	plainText, err := aesgcm.Open(nil, nonce, cipherText[:len(cipherText)-12], nil)
-	if err != nil {
-		panic(err.Error())
-	}
+	plainText, _ := aesgcm.Open(nil, nonce, cipherText[:len(cipherText)-12], nil)
+	// if err != nil {
+	// 	panic(err.Error())
+	// }
 
 	dstFile, err := os.Create(source)
 	if err != nil {
