@@ -47,7 +47,7 @@ func encryptHandel() {
 	password := getPassword()
 	fmt.Println("\nEncrypting...")
 	filecrypt.Encrypt(file, password)
-	fmt.Println("\n file successfully decrypted")
+	fmt.Println("\n file successfully encrypted")
 
 }
 
@@ -56,6 +56,16 @@ func decryptHandle() {
 		fmt.Println("missing the path to the file , for more info run the help command")
 		os.Exit(0)
 	}
+	file := os.Args[2]
+	if !validateFile(file) {
+		panic("file not found")
+	}
+	fmt.Print("Enter password")
+	password, _ := term.ReadPassword(0)
+	fmt.Println("\nDecrypcting...")
+	filecrypt.Decrypt(file, password)
+	fmt.Println("\n file successfully decrypted")
+
 }
 
 func getPassword() []byte {
