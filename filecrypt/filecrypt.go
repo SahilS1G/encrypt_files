@@ -100,10 +100,10 @@ func Decrypt(source string, password []byte) {
 		panic(err.Error())
 	}
 
-	plainText, _ := aesgcm.Open(nil, nonce, cipherText[:len(cipherText)-12], nil)
-	// if err != nil {
-	// 	panic(err.Error())
-	// }
+	plainText, err := aesgcm.Open(nil, nonce, cipherText[:len(cipherText)-12], nil)
+	if err != nil {
+    panic(err.Error())
+	 }
 
 	dstFile, err := os.Create(source)
 	if err != nil {
